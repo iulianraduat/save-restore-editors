@@ -17,9 +17,7 @@ const emptyConfig: TConfig = {
 export async function saveEditors() {
   const allTextEditors = getAllTextEditors();
   if (allTextEditors.length === 0) {
-    vscode.window.showInformationMessage(
-      'Save and restore editors: no text editors were found.'
-    );
+    vscode.window.showInformationMessage('Save and restore editors: no text editors were found.');
     return;
   }
 
@@ -51,20 +49,22 @@ export async function saveEditors() {
 function getAllTextEditors(): vscode.TextDocument[] {
   const allDocuments = vscode.workspace.textDocuments;
   allDocuments.forEach((d) => outputChannel.appendLine(d.uri.toString()));
-  const allTextEditors = allDocuments.filter(
-    (doc) => doc.uri.scheme === 'file'
-  );
+  const allTextEditors = allDocuments.filter((doc) => doc.uri.scheme === 'file');
   return allTextEditors;
 }
 
 function getConfigPath(): string | undefined {
   const workspaceFolders = vscode.workspace.workspaceFolders;
   if (workspaceFolders === undefined || workspaceFolders.length === 0) {
-    return 'C:\\Workspace\\prj\\vscode-ext\\save-restore-editors\\.vscode\\save-restore-editors.json';
+    return;
   }
 
   const rootPath = workspaceFolders[0].uri.fsPath;
-  return `${rootPath}${path.sep}.vscode${path.sep}save-restore-editors.json`;
+  const vscodePath = `${rootPath}${path.sep}.vscode`;
+  if (fs.existsSync(vscodePath) === false) {
+    fs.mkdirSync(vscodePath);
+  }
+  return `${vscodePath}${path.sep}save-restore-editors.json`;
 }
 
 function getConfig(configPath: string): TConfig {
