@@ -2,8 +2,6 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const outputChannel = vscode.window.createOutputChannel('save-restore-editors');
-
 interface TConfig {
   tabs: {
     name: string;
@@ -48,7 +46,6 @@ export async function saveEditors() {
 
 function getAllTextEditors(): vscode.TextDocument[] {
   const allDocuments = vscode.workspace.textDocuments;
-  allDocuments.forEach((d) => outputChannel.appendLine(d.uri.toString()));
   const allTextEditors = allDocuments.filter((doc) => doc.uri.scheme === 'file');
   return allTextEditors;
 }
@@ -74,12 +71,10 @@ function getConfig(configPath: string): TConfig {
     if (Array.isArray(config.tabs) === false) {
       throw new Error();
     }
-
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
     return config;
   } catch (err) {
     fs.writeFileSync(configPath, JSON.stringify(emptyConfig, null, 2));
-    return emptyConfig;
+    return { ...emptyConfig };
   }
 }
 

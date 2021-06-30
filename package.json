@@ -2,7 +2,7 @@
   "name": "save-restore-editors",
   "displayName": "Save and restore tabs",
   "description": "Save and restore all tabs with text editors",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "icon": "images/logo.png",
   "license": "GPL-3.0",
   "publisher": "iulian-radu-at",
@@ -13,6 +13,17 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/iulian-radu-at/save-restore-editors"
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "install:local": "code --install-extension save-restore-editors-1.0.2.vsix",
+    "publish": "vsce publish"
   },
   "engines": {
     "vscode": "^1.46.0"
@@ -41,17 +52,6 @@
         "title": "Save and restore editors: Delete a saved set of editors"
       }
     ]
-  },
-  "scripts": {
-    "vscode:prepublish": "yarn run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "yarn run compile && yarn run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js",
-    "package": "vsce package",
-    "install:local": "code --install-extension save-restore-editors-1.0.1.vsix",
-    "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/vscode": "1.46.0",

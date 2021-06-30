@@ -31,3 +31,17 @@ All notable changes to the "Save and restore tabs" extension will be documented 
 ### Removed
 
 - Nothing
+
+## 1.0.2 (2021-06-30)
+
+### Added
+
+- Nothing
+
+### Changed
+
+- Removed debug code
+
+### Removed
+
+- Nothing
