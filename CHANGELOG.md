@@ -45,3 +45,17 @@ All notable changes to the "Save and restore tabs" extension will be documented 
 ### Removed
 
 - Nothing
+
+## 1.0.3 (2021-09-04)
+
+### Added
+
+- Nothing
+
+### Changed
+
+- Updated the packages
+
+### Removed
+
+- Nothing
