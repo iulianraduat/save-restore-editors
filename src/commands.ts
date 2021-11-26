@@ -159,3 +159,36 @@ export async function deleteSavedEditors() {
   config.tabs = tabs;
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 }
+
+export async function popSavedEditors() {
+  const configPath = getConfigPath();
+  if (configPath === undefined) {
+    return;
+  }
+
+  const config: TConfig = getConfig(configPath);
+  const existingNames = getExistingNames(config);
+
+  if (existingNames.length === 0) {
+    vscode.window.showInformationMessage(
+      `Save and restore editors: no saved groups of text editors in "${configPath}".`
+    );
+    return;
+  }
+
+  const name = await getSelectedName(existingNames);
+  if (name === undefined) {
+    return;
+  }
+
+  const tab = config.tabs.find((t) => t.name === name);
+  tab?.files.forEach(async (file) => {
+    const uri = vscode.Uri.parse(file);
+    const doc = await vscode.workspace.openTextDocument(uri);
+    vscode.window.showTextDocument(doc, { preview: false });
+  });
+
+  const tabs = config.tabs.filter((t) => t.name !== name);
+  config.tabs = tabs;
+  fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+}

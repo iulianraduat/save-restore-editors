@@ -73,3 +73,17 @@ All notable changes to the "Save and restore tabs" extension will be documented 
 ### Removed
 
 - Nothing
+
+## 1.1.0 (2021-11-26)
+
+### Added
+
+- Pop command which does a Restore followed by a Delete
+
+### Changed
+
+- Nothing
+
+### Removed
+
+- Nothing
