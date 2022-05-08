@@ -4,10 +4,17 @@ import * as path from 'path';
 
 interface TConfig {
   tabs: {
+    files?: string[];
     name: string;
-    files: string[];
+    tabGroups?: TConfigTabGroup[];
   }[];
 }
+
+interface TConfigTabGroup {
+  files: string[];
+  viewColumn: vscode.ViewColumn;
+}
+
 const emptyConfig: TConfig = {
   tabs: [],
 };
@@ -15,7 +22,9 @@ const emptyConfig: TConfig = {
 export async function saveEditors() {
   const allTextEditors = getAllTextEditors();
   if (allTextEditors.length === 0) {
-    vscode.window.showInformationMessage('Save and restore editors: no text editors were found.');
+    vscode.window.showInformationMessage(
+      'Save and restore editors: no text editors were found.'
+    );
     return;
   }
 
@@ -32,10 +41,10 @@ export async function saveEditors() {
     return;
   }
 
-  const files = allTextEditors.map((te) => te.uri.toString());
+  const tabGroups = getTabGroups();
   config.tabs.push({
     name,
-    files,
+    tabGroups,
   });
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 
@@ -46,7 +55,9 @@ export async function saveEditors() {
 
 function getAllTextEditors(): vscode.TextDocument[] {
   const allDocuments = vscode.workspace.textDocuments;
-  const allTextEditors = allDocuments.filter((doc) => doc.uri.scheme === 'file');
+  const allTextEditors = allDocuments.filter(
+    (doc) => doc.uri.scheme === 'file'
+  );
   return allTextEditors;
 }
 
@@ -97,6 +108,32 @@ function getValidateInput(
   return existingNames.includes(value) ? 'This name is already used' : null;
 }
 
+function getTabGroups(): TConfigTabGroup[] {
+  const tabGroups = vscode.window.tabGroups.all.map((tabGroup) => {
+    const { tabs, viewColumn } = tabGroup;
+
+    const files = tabs.reduce<string[]>((acc, tab) => {
+      const { input } = tab;
+      const scheme = (input as vscode.TabInputText).uri.scheme;
+      if (scheme === 'file') {
+        const fsPath = (input as vscode.TabInputText).uri.toString();
+        acc.push(fsPath);
+      }
+      return acc;
+    }, []);
+
+    return {
+      files,
+      viewColumn,
+    };
+  });
+
+  /* We sort by view column index */
+  tabGroups.sort((a, b) => a.viewColumn - b.viewColumn);
+
+  return tabGroups;
+}
+
 export async function restoreEditors() {
   const configPath = getConfigPath();
   if (configPath === undefined) {
@@ -119,11 +156,15 @@ export async function restoreEditors() {
   }
 
   const tab = config.tabs.find((t) => t.name === name);
-  tab?.files.forEach(async (file) => {
-    const uri = vscode.Uri.parse(file);
-    const doc = await vscode.workspace.openTextDocument(uri);
-    vscode.window.showTextDocument(doc, { preview: false });
-  });
+  if (tab === undefined) {
+    return;
+  }
+
+  if (tab.tabGroups) {
+    openTabGroups(tab.tabGroups);
+  } else {
+    openFiles(tab.files);
+  }
 }
 
 async function getSelectedName(existingNames: string[]) {
@@ -182,13 +223,41 @@ export async function popSavedEditors() {
   }
 
   const tab = config.tabs.find((t) => t.name === name);
-  tab?.files.forEach(async (file) => {
-    const uri = vscode.Uri.parse(file);
-    const doc = await vscode.workspace.openTextDocument(uri);
-    vscode.window.showTextDocument(doc, { preview: false });
-  });
+  if (tab === undefined) {
+    return;
+  }
+
+  if (tab.tabGroups) {
+    openTabGroups(tab.tabGroups);
+  } else {
+    openFiles(tab.files);
+  }
 
   const tabs = config.tabs.filter((t) => t.name !== name);
   config.tabs = tabs;
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+}
+
+function openTabGroups(tabGroups: TConfigTabGroup[]) {
+  tabGroups.map((tabGroup) => {
+    const { files, viewColumn } = tabGroup;
+    const options: vscode.TextDocumentShowOptions = {
+      preview: false,
+      viewColumn,
+    };
+
+    files.forEach(async (file) => {
+      const uri = vscode.Uri.parse(file);
+      const doc = await vscode.workspace.openTextDocument(uri);
+      vscode.window.showTextDocument(doc, options);
+    });
+  });
+}
+
+function openFiles(files?: string[]) {
+  files?.forEach(async (file) => {
+    const uri = vscode.Uri.parse(file);
+    const doc = await vscode.workspace.openTextDocument(uri);
+    vscode.window.showTextDocument(doc, { preview: false });
+  });
 }

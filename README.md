@@ -11,6 +11,9 @@ But later we want to work again on currently opened text editors.
 
 This extension allows you to save sets of all opened text editors.
 Then you can restore (reopen) them and also remove one of them from the saved sets.
+When restoring tabs, the tab groups will be (partially) preserved but not their arrangement in window.
+Also the active editor in restored tab groups will not refect the one at the time of save.
+The preservation can be only partially as only text files will be restored.
 
 The list of saved sets is stored in the first workspace folder in .vscode/save-restore-editors.json file.
 If you make changes in this file and you corupt its structure, the extension will create instead a new empty file.
@@ -44,6 +47,8 @@ There are not any custom settings.
 
 The vscode.workspace.textDocuments does not return the URI for the tabs which were not made visible (open) by the user.
 This happens when you start Visual Code and the previous set of opened editors are loaded by Visual Code.
+
+The preview of images open at save time is not happening after restore.
 
 ## Change Log
 

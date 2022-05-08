@@ -101,3 +101,17 @@ All notable changes to the "Save and restore tabs" extension will be documented 
 ### Removed
 
 - Nothing
+
+## 1.2.0 (2022-05-08)
+
+### Added
+
+- Support for groups of editors (uses the TabGroups API introduced in VSCode 1.67)
+
+### Changed
+
+- Updated the packages
+
+### Removed
+
+- Nothing
