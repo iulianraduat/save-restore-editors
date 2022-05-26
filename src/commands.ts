@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { isAllowedOverwriting, isAskingForConfirmation } from './settings';
 
 interface TConfig {
   tabs: {
@@ -42,10 +43,8 @@ export async function saveEditors() {
   }
 
   const tabGroups = getTabGroups();
-  config.tabs.push({
-    name,
-    tabGroups,
-  });
+  config.tabs = config.tabs.filter((t) => t.name !== name);
+  config.tabs.push({ name, tabGroups });
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 
   vscode.window.showInformationMessage(
@@ -94,10 +93,28 @@ function getExistingNames(config: TConfig) {
 }
 
 async function getInputName(existingNames: string[]) {
+  const allowOverwrite = isAllowedOverwriting();
   const name = await vscode.window.showInputBox({
     placeHolder: 'Name of this new group of saved editors',
-    validateInput: (value: string) => getValidateInput(value, existingNames),
+    validateInput: allowOverwrite
+      ? undefined
+      : (value: string) => getValidateInput(value, existingNames),
   });
+  if (!name) {
+    return;
+  }
+
+  if (allowOverwrite && isAskingForConfirmation()) {
+    const answer = await vscode.window.showInformationMessage(
+      'Do you want to overwrite the existing saved group?',
+      'Yes',
+      'No'
+    );
+    if (answer !== 'Yes') {
+      return;
+    }
+  }
+
   return name;
 }
 
@@ -114,9 +131,13 @@ function getTabGroups(): TConfigTabGroup[] {
 
     const files = tabs.reduce<string[]>((acc, tab) => {
       const { input } = tab;
-      const scheme = (input as vscode.TabInputText).uri.scheme;
+      if (!(input instanceof vscode.TabInputText)) {
+        return acc;
+      }
+
+      const scheme = input.uri.scheme;
       if (scheme === 'file') {
-        const fsPath = (input as vscode.TabInputText).uri.toString();
+        const fsPath = input.uri.toString();
         acc.push(fsPath);
       }
       return acc;

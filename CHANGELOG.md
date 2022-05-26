@@ -115,3 +115,19 @@ All notable changes to the "Save and restore tabs" extension will be documented 
 ### Removed
 
 - Nothing
+
+## 1.3.0 (2022-05-26)
+
+### Added
+
+- Setting to allow the overwriting of an existing saved group having the same name
+- Setting to enable the confirmation of executing a destructive action (like overwriting saved groups)
+
+### Changed
+
+- Updated the packages
+- Fixed crash when trying to save a group containg the Settings or the Diff editor
+
+### Removed
+
+- Nothing

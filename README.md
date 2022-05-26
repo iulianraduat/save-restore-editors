@@ -41,7 +41,15 @@ There are no special requirements.
 
 ## Extension Settings
 
-There are not any custom settings.
+- saveRestoreEditors.allowOverwrite:
+
+  - Save and restore tabs: allows overwriting of exiting saved group with the same name
+  - default false
+
+- saveRestoreEditors.confirmAction:
+
+  - Save and restore tabs: ask for confirmation of destructive actions (like overwriting saved groups)
+  - default true
 
 ## Known Issues
 
