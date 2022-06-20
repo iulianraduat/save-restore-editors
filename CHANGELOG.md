@@ -131,3 +131,17 @@ All notable changes to the "Save and restore tabs" extension will be documented 
 ### Removed
 
 - Nothing
+
+## 1.3.1 (2022-06-22)
+
+### Added
+
+- Support link for extension's author (https://www.patreon.com/iulian_radu_at)
+
+### Changed
+
+- Updated the packages
+
+### Removed
+
+- Nothing
