@@ -2,7 +2,7 @@
 
 [![Marketplace Version](https://vsmarketplacebadges.dev/version/iulian-radu-at.save-restore-editors.svg)](https://marketplace.visualstudio.com/items?itemName=iulian-radu-at.save-restore-editors)
 [![Installs](https://vsmarketplacebadges.dev/installs/iulian-radu-at.save-restore-editors.svg)](https://marketplace.visualstudio.com/items?itemName=iulian-radu-at.save-restore-editors)
-[![Rating](https://vsmarketplacebadges.dev/rating/iulian-radu-at.save-restore-editors.svg)](https://marketplace.visualstudio.com/items?itemName=iulian-radu-at.save-restore-editors)
+[![Rating](https://vsmarketplacebadges.dev/rating-short/iulian-radu-at.save-restore-editors.svg)](https://marketplace.visualstudio.com/items?itemName=iulian-radu-at.save-restore-editors)
 <a href="http://opensource.org/licenses/GPL-3.0" target="_blank" rel="noreferrer noopener"><img src="https://img.shields.io/badge/license-GPL-orange.svg?color=blue&amp;style=flat-square" alt="The GPL-3.0 License"></a>
 
 Sometimes we need to stop on what we work and do something else.
