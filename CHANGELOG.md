@@ -188,3 +188,17 @@ All notable changes to the "Save and restore tabs" extension will be documented 
 ### Removed
 
 - Nothing
+
+## 1.4.0 (2023-08-27)
+
+### Added
+
+- Support for editor layout
+
+### Changed
+
+- Nothing
+
+### Removed
+
+- Nothing

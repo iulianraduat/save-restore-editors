@@ -1,11 +1,13 @@
-import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as vscode from 'vscode';
 import { isAllowedOverwriting, isAskingForConfirmation } from './settings';
+import { EditorLayout } from './types';
 
 interface TConfig {
   tabs: {
     files?: string[];
+    layout?: EditorLayout;
     name: string;
     tabGroups?: TConfigTabGroup[];
   }[];
@@ -44,12 +46,18 @@ export async function saveEditors() {
 
   const tabGroups = getTabGroups();
   config.tabs = config.tabs.filter((t) => t.name !== name);
-  config.tabs.push({ name, tabGroups });
+  const layout = await getEditorLayout();
+  config.tabs.push({ name, tabGroups, layout });
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 
   vscode.window.showInformationMessage(
     `Save and restore editors: saved all open text editors as "${name}" in "${configPath}".`
   );
+}
+
+async function getEditorLayout(): Promise<EditorLayout> {
+  const layout = await vscode.commands.executeCommand('vscode.getEditorLayout');
+  return layout as EditorLayout;
 }
 
 function getAllTextEditors(): vscode.TextDocument[] {
@@ -186,6 +194,14 @@ export async function restoreEditors() {
   } else {
     openFiles(tab.files);
   }
+
+  if (tab.layout) {
+    setEditorLayout(tab.layout);
+  }
+}
+
+async function setEditorLayout(layout: EditorLayout) {
+  await vscode.commands.executeCommand('vscode.setEditorLayout', layout);
 }
 
 async function getSelectedName(existingNames: string[]) {
