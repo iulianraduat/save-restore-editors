@@ -1,17 +1,55 @@
 import * as vscode from 'vscode';
-import { deleteSavedEditors, popSavedEditors, restoreEditors, saveEditors } from './commands';
+import {
+  cleanPopSavedEditors,
+  cleanRestoreEditors,
+  deleteSavedEditors,
+  popSavedEditors,
+  resaveEditors,
+  restoreEditors,
+  saveEditors,
+} from './commands';
 
 export function activate(context: vscode.ExtensionContext) {
-  let disposable = vscode.commands.registerCommand('saveRestoreEditors.saveEditors', saveEditors);
+  let disposable = vscode.commands.registerCommand(
+    'saveRestoreEditors.saveEditors',
+    saveEditors
+  );
   context.subscriptions.push(disposable);
 
-  disposable = vscode.commands.registerCommand('saveRestoreEditors.restoreEditors', restoreEditors);
+  disposable = vscode.commands.registerCommand(
+    'saveRestoreEditors.resaveEditors',
+    resaveEditors
+  );
   context.subscriptions.push(disposable);
 
-  disposable = vscode.commands.registerCommand('saveRestoreEditors.deleteSavedEditors', deleteSavedEditors);
+  disposable = vscode.commands.registerCommand(
+    'saveRestoreEditors.restoreEditors',
+    restoreEditors
+  );
   context.subscriptions.push(disposable);
 
-  disposable = vscode.commands.registerCommand('saveRestoreEditors.popSavedEditors', popSavedEditors);
+  disposable = vscode.commands.registerCommand(
+    'saveRestoreEditors.cleanRestoreEditors',
+    cleanRestoreEditors
+  );
+  context.subscriptions.push(disposable);
+
+  disposable = vscode.commands.registerCommand(
+    'saveRestoreEditors.deleteSavedEditors',
+    deleteSavedEditors
+  );
+  context.subscriptions.push(disposable);
+
+  disposable = vscode.commands.registerCommand(
+    'saveRestoreEditors.popSavedEditors',
+    popSavedEditors
+  );
+  context.subscriptions.push(disposable);
+
+  disposable = vscode.commands.registerCommand(
+    'saveRestoreEditors.cleanPopSavedEditors',
+    cleanPopSavedEditors
+  );
   context.subscriptions.push(disposable);
 }
 

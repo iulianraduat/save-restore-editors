@@ -202,3 +202,19 @@ All notable changes to the "Save and restore tabs" extension will be documented 
 ### Removed
 
 - Nothing
+
+## 1.5.0 (2023-09-10)
+
+### Added
+
+- New command `Save and restore editors: Re-save all open text editors`
+- New command `Save and restore editors: Close all and Restore a saved set of editors`
+- New command `Save and restore editors: Close all and Pop (Restore+Delete) a saved set of editors`
+
+### Changed
+
+- Request confirmation of save, re-save and delete if `confirmAction` setting is `true`
+
+### Removed
+
+- Nothing

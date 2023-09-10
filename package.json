@@ -2,7 +2,7 @@
   "name": "save-restore-editors",
   "displayName": "Save and restore tabs",
   "description": "Save and restore all tabs with text editors",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "icon": "images/logo.png",
   "license": "GPL-3.0",
   "publisher": "iulian-radu-at",
@@ -28,7 +28,7 @@
     "esbuild-base": "rimraf out && esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node --target=es6",
     "esbuild": "npm run -S esbuild-base -- --sourcemap",
     "package": "vsce package",
-    "install:local": "npm run package && code --install-extension save-restore-editors-1.4.0.vsix",
+    "install:local": "npm run package && code --install-extension save-restore-editors-1.5.0.vsix",
     "publish": "vsce publish",
     "esbuild-watch": "npm run -S esbuild-base -- --sourcemap --watch",
     "test-compile": "rimraf out && tsc -p ./",
@@ -45,8 +45,16 @@
         "title": "Save and restore editors: Save all open text editors"
       },
       {
+        "command": "saveRestoreEditors.resaveEditors",
+        "title": "Save and restore editors: Re-save all open text editors"
+      },
+      {
         "command": "saveRestoreEditors.restoreEditors",
         "title": "Save and restore editors: Restore a saved set of editors"
+      },
+      {
+        "command": "saveRestoreEditors.cleanRestoreEditors",
+        "title": "Save and restore editors: Close all and Restore a saved set of editors"
       },
       {
         "command": "saveRestoreEditors.deleteSavedEditors",
@@ -55,6 +63,10 @@
       {
         "command": "saveRestoreEditors.popSavedEditors",
         "title": "Save and restore editors: Pop (Restore+Delete) a saved set of editors"
+      },
+      {
+        "command": "saveRestoreEditors.cleanPopSavedEditors",
+        "title": "Save and restore editors: Close all and Pop (Restore+Delete) a saved set of editors"
       }
     ],
     "configuration": [
@@ -70,7 +82,7 @@
           "saveRestoreEditors.confirmAction": {
             "type": "boolean",
             "default": true,
-            "description": "Save and restore tabs: ask for confirmation of destructive actions",
+            "description": "Save and restore tabs: ask for confirmation of overwriting or deleting saved groups",
             "scope": "resource"
           }
         }

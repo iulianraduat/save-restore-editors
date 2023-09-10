@@ -55,6 +55,57 @@ export async function saveEditors() {
   );
 }
 
+export async function resaveEditors() {
+  const allTextEditors = getAllTextEditors();
+  if (allTextEditors.length === 0) {
+    vscode.window.showInformationMessage(
+      'Save and restore editors: no text editors were found.'
+    );
+    return;
+  }
+
+  const configPath = getConfigPath();
+  if (configPath === undefined) {
+    return;
+  }
+
+  const config: TConfig = getConfig(configPath);
+  const existingNames = getExistingNames(config);
+
+  if (existingNames.length === 0) {
+    vscode.window.showInformationMessage(
+      `Save and restore editors: no saved groups of text editors in "${configPath}".`
+    );
+    return;
+  }
+
+  const name = await getSelectedName(existingNames);
+  if (name === undefined) {
+    return;
+  }
+
+  if (isAskingForConfirmation()) {
+    const answer = await vscode.window.showInformationMessage(
+      'Do you want to overwrite the existing saved group?',
+      'Yes',
+      'No'
+    );
+    if (answer !== 'Yes') {
+      return;
+    }
+  }
+
+  const tabGroups = getTabGroups();
+  config.tabs = config.tabs.filter((t) => t.name !== name);
+  const layout = await getEditorLayout();
+  config.tabs.push({ name, tabGroups, layout });
+  fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+
+  vscode.window.showInformationMessage(
+    `Save and restore editors: saved all open text editors as "${name}" in "${configPath}".`
+  );
+}
+
 async function getEditorLayout(): Promise<EditorLayout> {
   const layout = await vscode.commands.executeCommand('vscode.getEditorLayout');
   return layout as EditorLayout;
@@ -163,7 +214,11 @@ function getTabGroups(): TConfigTabGroup[] {
   return tabGroups;
 }
 
-export async function restoreEditors() {
+export async function cleanRestoreEditors() {
+  await restoreEditors(closeAllOpenTabs);
+}
+
+export async function restoreEditors(preAction?: () => Promise<void>) {
   const configPath = getConfigPath();
   if (configPath === undefined) {
     return;
@@ -187,6 +242,10 @@ export async function restoreEditors() {
   const tab = config.tabs.find((t) => t.name === name);
   if (tab === undefined) {
     return;
+  }
+
+  if (preAction) {
+    await preAction();
   }
 
   if (tab.tabGroups) {
@@ -233,12 +292,27 @@ export async function deleteSavedEditors() {
     return;
   }
 
+  if (isAskingForConfirmation()) {
+    const answer = await vscode.window.showInformationMessage(
+      'Do you want to delete the existing saved group?',
+      'Yes',
+      'No'
+    );
+    if (answer !== 'Yes') {
+      return;
+    }
+  }
+
   const tabs = config.tabs.filter((t) => t.name !== name);
   config.tabs = tabs;
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 }
 
-export async function popSavedEditors() {
+export async function cleanPopSavedEditors() {
+  await popSavedEditors(closeAllOpenTabs);
+}
+
+export async function popSavedEditors(preAction?: () => Promise<void>) {
   const configPath = getConfigPath();
   if (configPath === undefined) {
     return;
@@ -262,6 +336,21 @@ export async function popSavedEditors() {
   const tab = config.tabs.find((t) => t.name === name);
   if (tab === undefined) {
     return;
+  }
+
+  if (isAskingForConfirmation()) {
+    const answer = await vscode.window.showInformationMessage(
+      'Do you want to delete the existing saved group?',
+      'Yes',
+      'No'
+    );
+    if (answer !== 'Yes') {
+      return;
+    }
+  }
+
+  if (preAction) {
+    await preAction();
   }
 
   if (tab.tabGroups) {
@@ -297,4 +386,10 @@ function openFiles(files?: string[]) {
     const doc = await vscode.workspace.openTextDocument(uri);
     vscode.window.showTextDocument(doc, { preview: false });
   });
+}
+
+async function closeAllOpenTabs() {
+  const tabs = vscode.window.tabGroups.all;
+  const closedTabs = tabs.map((tab) => vscode.window.tabGroups.close(tab));
+  await Promise.all(closedTabs);
 }

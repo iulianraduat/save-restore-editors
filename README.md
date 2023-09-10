@@ -32,8 +32,12 @@ saved sets and also which files will be open.
 This extension make available the following commands:
 
 - Save and restore editors: Save all open text editors
+- Save and restore editors: Re-save all open text editors
 - Save and restore editors: Restore a saved set of editors
+- Save and restore editors: Close all and Restore a saved set of editors
 - Save and restore editors: Delete a saved set of editors
+- Save and restore editors: Pop (Restore+Delete) a saved set of editors
+- Save and restore editors: Close all and Pop (Restore+Delete) a saved set of editors
 
 ## Requirements
 
@@ -45,11 +49,13 @@ There are no special requirements.
 
   - Save and restore tabs: allows overwriting of exiting saved group with the same name
   - default false
+  - Relevant only for 'Save and restore editors: Save all open text editors'
 
 - saveRestoreEditors.confirmAction:
 
-  - Save and restore tabs: ask for confirmation of destructive actions (like overwriting saved groups)
+  - Save and restore tabs: ask for confirmation of overwriting or deleting saved groups
   - default true
+  - Relevant only for save, re-save and delete actions
 
 ## Known Issues
 
