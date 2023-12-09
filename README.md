@@ -27,9 +27,9 @@ saved sets and also which files will be open.
 - Restore a set of open text editors
 - Delete a set of open text editors
 
-## Usage
+## Commands
 
-This extension make available the following commands:
+This extension makes available the following commands:
 
 - Save and restore editors: Save all open text editors
 - Save and restore editors: Re-save all open text editors
@@ -38,6 +38,52 @@ This extension make available the following commands:
 - Save and restore editors: Delete a saved set of editors
 - Save and restore editors: Pop (Restore+Delete) a saved set of editors
 - Save and restore editors: Close all and Pop (Restore+Delete) a saved set of editors
+
+## Keyboard shortcuts for commands
+
+You can define keyboard shortcuts for the often used above commands.
+
+In `Command pallet` (F1 or Ctrl + Shift + P) run the command `Preferences: Open Keyboard Shortcuts`.
+In `Type to search in keybindings` type `Save and restore editors`. You can, with double click on an entry, define keyboard shortcuts for any command.
+
+An example of keyboard shortcuts can be:
+
+* `Ctrl + Alt + S` for `Save and restore editors: Save all open text editors`
+* `Ctrl + Alt + D` for `Save and restore editors: Close all and Pop (Restore+Delete) a saved set of editors`
+
+For more details check [Advanced customization](https://code.visualstudio.com/docs/getstarted/keybindings#_advanced-customization) on Visual Studio Code documentation.
+
+## Usage - examples
+
+### Save the list of all currently open editor views
+
+* From `Command pallet` (F1 or Ctrl + Shift + P) run the command `Save and restore editors: Save all open text editors`
+* Provide a name (for example: Ticket-1234) and press enter
+* The list of currently open editors is saved in `.vscode\save-restore-editors.json`
+* Commit or stash your changes
+* Checkout a different branch
+
+### Re-open a set of saved editors
+
+* Checkout a branch in which you want to continue your work
+* From `Command pallet` (F1 or Ctrl + Shift + P) run the command `Save and restore editors: Restore a saved set of editors`
+* Pick from the list the name of the saved set correspondign to this branch
+* In addition to already open editors will be opened the files specified in choosed saved set
+
+### Replace the list of all currently open editor views
+
+* When you need to switch again to a different branch you can replace the old set of opened editors for when you will come back
+* From `Command pallet` (F1 or Ctrl + Shift + P) run the command `Save and restore editors: Re-save all open text editors`
+* Pick the name of an already saved set from the list
+* The list of currently open editors is saved in `.vscode\save-restore-editors.json` overwriting the old one
+* Commit or stash your changes
+* Checkout a different branch
+
+### Replace currently open editor views and delete the saved set
+
+* From `Command pallet` (F1 or Ctrl + Shift + P) run the command `Save and restore editors: Close all and Pop (Restore+Delete) a saved set of editors`
+* All currently open editors are closed and all files specified in the saved set are open
+* The saved set is removed from `.vscode\save-restore-editors.json`
 
 ## Requirements
 

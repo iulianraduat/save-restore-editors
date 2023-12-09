@@ -218,3 +218,17 @@ All notable changes to the "Save and restore tabs" extension will be documented 
 ### Removed
 
 - Nothing
+
+## 1.5.1 (2023-12-09)
+
+### Added
+
+- Added section `Keyboard shortcuts for commands` in `Readme`
+
+### Changed
+
+- Improved section `Usage` in `Readme`
+
+### Removed
+
+- Nothing
