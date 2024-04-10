@@ -2,20 +2,20 @@
   "name": "save-restore-editors",
   "displayName": "Save and restore tabs",
   "description": "Save and restore all tabs with text editors",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "icon": "images/logo.png",
   "license": "GPL-3.0",
   "publisher": "iulian-radu-at",
   "homepage": "https://marketplace.visualstudio.com/items?itemName=iulian-radu-at.save-restore-editors",
   "bugs": {
-    "url": "https://github.com/iulian-radu-at/save-restore-editors/issues"
+    "url": "https://github.com/iulianraduat/save-restore-editors/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/iulian-radu-at/save-restore-editors"
+    "url": "https://github.com/iulianraduat/save-restore-editors"
   },
   "sponsor": {
-    "url": "https://www.patreon.com/iulian_radu_at"
+    "url": "https://www.patreon.com/iulianraduat"
   },
   "engines": {
     "vscode": "^1.76.0"
@@ -28,7 +28,7 @@
     "esbuild-base": "rimraf out && esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node --target=es6",
     "esbuild": "npm run -S esbuild-base -- --sourcemap",
     "package": "vsce package",
-    "install:local": "npm run package && code --install-extension save-restore-editors-1.5.1.vsix",
+    "install:local": "npm run package && code --install-extension save-restore-editors-1.5.2.vsix",
     "publish": "vsce publish",
     "esbuild-watch": "npm run -S esbuild-base -- --sourcemap --watch",
     "test-compile": "rimraf out && tsc -p ./",
