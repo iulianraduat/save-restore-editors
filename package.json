@@ -2,7 +2,7 @@
   "name": "save-restore-editors",
   "displayName": "Save and restore tabs",
   "description": "Save and restore all tabs with text editors",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "icon": "images/logo.png",
   "license": "GPL-3.0",
   "publisher": "iulian-radu-at",
