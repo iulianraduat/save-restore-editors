@@ -2,7 +2,7 @@
   "name": "save-restore-editors",
   "displayName": "Save and restore tabs",
   "description": "Save and restore all tabs with text editors",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "icon": "images/logo.png",
   "license": "GPL-3.0",
   "publisher": "iulian-radu-at",
@@ -76,13 +76,13 @@
           "saveRestoreEditors.allowOverwrite": {
             "type": "boolean",
             "default": false,
-            "description": "Save and restore tabs: allows overwriting of exiting saved group with the same name",
+            "description": "Allow overwriting of existing saved group with the same name",
             "scope": "resource"
           },
           "saveRestoreEditors.confirmAction": {
             "type": "boolean",
             "default": true,
-            "description": "Save and restore tabs: ask for confirmation of overwriting or deleting saved groups",
+            "description": "Ask for confirmation of overwriting or deleting saved groups",
             "scope": "resource"
           }
         }
