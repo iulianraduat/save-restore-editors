@@ -15,7 +15,7 @@
     "url": "https://github.com/iulianraduat/save-restore-editors"
   },
   "sponsor": {
-    "url": "https://www.patreon.com/iulianraduat"
+    "url": "https://www.amazon.com/dp/B0DD3DNDY1"
   },
   "engines": {
     "vscode": "^1.76.0"
@@ -28,7 +28,7 @@
     "esbuild-base": "rimraf out && esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node --target=es6",
     "esbuild": "npm run -S esbuild-base -- --sourcemap",
     "package": "vsce package",
-    "install:local": "npm run package && code --install-extension save-restore-editors-1.5.2.vsix",
+    "install:local": "npm run package && code --install-extension save-restore-editors-1.5.3.vsix --profile=\"VSCode extension\"",
     "publish": "vsce publish",
     "esbuild-watch": "npm run -S esbuild-base -- --sourcemap --watch",
     "test-compile": "rimraf out && tsc -p ./",
@@ -90,13 +90,13 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "16.11.68",
+    "@types/node": "16.18.106",
     "@types/vscode": "1.76.0",
-    "@typescript-eslint/eslint-plugin": "6.13.2",
-    "@typescript-eslint/parser": "6.13.2",
-    "esbuild": "0.19.8",
-    "eslint": "8.55.0",
-    "rimraf": "5.0.5",
-    "typescript": "5.3.3"
+    "@typescript-eslint/eslint-plugin": "8.3.0",
+    "@typescript-eslint/parser": "8.3.0",
+    "esbuild": "0.23.1",
+    "eslint": "9.9.1",
+    "rimraf": "6.0.1",
+    "typescript": "5.5.4"
   }
 }
