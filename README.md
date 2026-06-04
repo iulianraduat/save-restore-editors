@@ -1,8 +1,5 @@
 # Save and Restore Editors
 
-[![Marketplace Version](https://img.shields.io/vscode-marketplace/v/iulian-radu-at.save-restore-editors)](https://marketplace.visualstudio.com/items?itemName=iulian-radu-at.save-restore-editors)
-[![Installs](https://img.shields.io/vscode-marketplace/i/iulian-radu-at.save-restore-editors)](https://marketplace.visualstudio.com/items?itemName=iulian-radu-at.save-restore-editors)
-[![Rating](https://img.shields.io/vscode-marketplace/r/iulian-radu-at.save-restore-editors)](https://marketplace.visualstudio.com/items?itemName=iulian-radu-at.save-restore-editors)
 <a href="http://opensource.org/licenses/GPL-3.0" target="_blank" rel="noreferrer noopener"><img src="https://img.shields.io/badge/license-GPL-orange.svg?color=blue&amp;style=flat-square" alt="The GPL-3.0 License"></a>
 
 Sometimes we need to stop on what we work and do something else.
@@ -96,13 +93,11 @@ There are no special requirements.
 ## Extension Settings
 
 - saveRestoreEditors.allowOverwrite:
-
   - Save and restore tabs: allows overwriting of exiting saved group with the same name
   - default false
   - Relevant only for 'Save and restore editors: Save all open text editors'
 
 - saveRestoreEditors.confirmAction:
-
   - Save and restore tabs: ask for confirmation of overwriting or deleting saved groups
   - default true
   - Relevant only for save, re-save and delete actions
